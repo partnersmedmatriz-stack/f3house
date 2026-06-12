@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Comercial Gratuito — F3House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #070B14;
+    --bg-alt: #0C1221;
+    --card: #0F1724;
+    --card-border: #1E293B;
+    --blue: #1D6FEB;
+    --blue-light: #4D94FF;
+    --blue-electric: #00C2FF;
+    --blue-dark: #0A47A9;
+    --blue-glow: rgba(29, 111, 235, 0.25);
+    --white: #FFFFFF;
+    --muted: #94A3B8;
+    --muted-dark: #64748B;
+    --success: #10B981;
+    --font: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--white);
+    line-height: 1.6;
+    padding-bottom: 110px;
+  }
+
+  /* ─── UTILITIES ─── */
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 96px 0; }
+  .section-alt { background: var(--bg-alt); }
+  .text-center { text-align: center; }
+  .text-muted { color: var(--muted); }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(29, 111, 235, 0.12);
+    border: 1px solid rgba(29, 111, 235, 0.3);
+    color: var(--blue-light);
+    padding: 6px 16px; border-radius: 100px;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.03em;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 16px 36px; border-radius: 12px;
+    font-family: var(--font); font-size: 16px; font-weight: 700;
+    cursor: pointer; border: none; transition: all 0.2s;
+    text-decoration: none; white-space: nowrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+    color: #fff;
+    box-shadow: 0 0 24px rgba(29, 111, 235, 0.4), 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 36px rgba(29, 111, 235, 0.6), 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-lg { padding: 20px 48px; font-size: 18px; border-radius: 14px; }
+  .btn-ghost {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--card-border);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.05); color: #fff; }
+  .btn-full { width: 100%; }
+
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--blue-light);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800; line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .section-subtitle {
+    font-size: 18px; color: var(--muted); line-height: 1.7;
+    max-width: 680px;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── HERO ─── */
+  #hero {
+    padding: 120px 0 80px;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(29, 111, 235, 0.18) 0%, transparent 65%),
+      var(--bg);
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231D6FEB' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px; }
+
+  .hero-badge-wrap {
+    display: inline-flex;
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
+  .hero-headline {
+    font-size: clamp(32px, 5.5vw, 64px);
+    font-weight: 900; line-height: 1.1; letter-spacing: -0.02em;
+    max-width: 880px;
+  }
+  .hero-headline span {
+    background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue-electric) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 18px; color: var(--muted); max-width: 640px; line-height: 1.7;
+  }
+
+  .hero-cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+
+  .hero-social-proof {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
+    border-radius: 100px; padding: 10px 20px;
+  }
+  .stars { color: #FBBF24; font-size: 16px; letter-spacing: 2px; }
+  .proof-text { font-size: 14px; font-weight: 600; color: var(--white); }
+  .proof-sep { width: 1px; height: 18px; background: var(--card-border); }
+  .proof-cases { font-size: 14px; color: var(--muted); }
+
+  .hero-video {
+    width: 100%; max-width: 760px;
+    aspect-ratio: 16/9;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(29,111,235,0.1);
+  }
+  .hero-video::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(29,111,235,0.08) 0%, transparent 70%);
+  }
+  .play-btn {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 32px rgba(29,111,235,0.5);
+    cursor: pointer; transition: transform 0.2s;
+    position: relative; z-index: 1;
+  }
+  .play-btn:hover { transform: scale(1.1); }
+  .play-btn svg { margin-left: 4px; }
+  .video-label { color: var(--muted); font-size: 14px; position: relative; z-index: 1; }
+
+  /* ─── PAIN POINTS ─── */
+  .pain-intro {
+    max-width: 760px; margin: 0 auto 16px;
+    font-size: clamp(20px, 3vw, 28px); font-weight: 700; line-height: 1.3;
+  }
+  .pain-sub {
+    max-width: 640px; margin: 0 auto 64px;
+    font-size: 17px; color: var(--muted); line-height: 1.7;
+  }
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 32px;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(29,111,235,0.3);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(29,111,235,0.1);
+  }
+  .card-icon {
+    width: 52px; height: 52px;
+    background: rgba(29,111,235,0.1); border: 1px solid rgba(29,111,235,0.2);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    color: var(--blue-light);
+  }
+  .card-icon svg { display: block; }
+  .card-title { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+  .card-text { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+  .section-cta { margin-top: 56px; text-align: center; }
+
+  /* ─── ILLUSIONS ─── */
+  .illusions-grid { display: grid; gap: 20px; }
+  .illusion-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 32px 36px;
+    display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: start;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .illusion-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(29,111,235,0.25);
+  }
+  .illusion-num {
+    font-size: 48px; font-weight: 900; color: rgba(29,111,235,0.15);
+    line-height: 1; min-width: 56px;
+  }
+  .illusion-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue-light);
+    margin-bottom: 6px;
+  }
+  .illusion-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+  .illusion-text { font-size: 15px; color: var(--muted); line-height: 1.7; }
+  .illusion-wrong {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.06em; color: #F87171;
+    background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 6px; padding: 3px 10px; margin-bottom: 10px;
+  }
+
+  /* ─── MECHANISM ─── */
+  .mechanism-intro { max-width: 680px; margin: 0 auto 64px; }
+  .gears-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .gear-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 32px;
+    display: flex; gap: 20px; align-items: flex-start;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .gear-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(29,111,235,0.3);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .gear-num {
+    font-size: 13px; font-weight: 800;
+    background: linear-gradient(135deg, var(--blue), var(--blue-electric));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    min-width: 32px;
+  }
+  .gear-content .gear-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .gear-content .gear-text { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* ─── TIMELINE (BENEFITS) ─── */
+  .timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 27px; top: 4px; bottom: 4px; width: 2px;
+    background: linear-gradient(to bottom,
+      var(--blue) 0%,
+      var(--blue-electric) 60%,
+      rgba(0,194,255,0.15) 100%
+    );
+    border-radius: 2px;
+  }
+  .tl-item {
+    display: flex; gap: 36px; align-items: flex-start;
+    margin-bottom: 36px; position: relative;
+  }
+  .tl-item:last-child { margin-bottom: 0; }
+
+  .tl-node {
+    width: 56px; height: 56px; flex-shrink: 0;
+    background: var(--card);
+    border: 2px solid var(--blue);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; position: relative; z-index: 1;
+    box-shadow: 0 0 0 6px rgba(29,111,235,0.08), 0 0 20px rgba(29,111,235,0.2);
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+  .tl-item:hover .tl-node {
+    box-shadow: 0 0 0 10px rgba(29,111,235,0.12), 0 0 36px rgba(29,111,235,0.45);
+  }
+  .tl-item:last-child .tl-node {
+    border-color: var(--blue-electric);
+    background: linear-gradient(135deg, rgba(0,194,255,0.12), rgba(29,111,235,0.12));
+    box-shadow: 0 0 0 8px rgba(0,194,255,0.12), 0 0 40px rgba(0,194,255,0.4);
+  }
+
+  .tl-card {
+    flex: 1; margin-top: 6px;
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 28px 32px;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  }
+  .tl-card:hover {
+    border-color: rgba(29,111,235,0.28);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    transform: translateX(5px);
+  }
+  .tl-item:last-child .tl-card {
+    background: linear-gradient(135deg, rgba(0,194,255,0.05) 0%, rgba(29,111,235,0.06) 100%);
+    border-color: rgba(0,194,255,0.22);
+  }
+
+  .tl-step {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--blue-light); margin-bottom: 8px;
+  }
+  .tl-item:last-child .tl-step { color: var(--blue-electric); }
+  .tl-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .tl-text { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--bg-alt); }
+  .about-inner {
+    display: grid; grid-template-columns: auto 1fr; gap: 64px; align-items: center;
+  }
+  .about-avatar {
+    width: 200px; height: 200px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+    border: 3px solid rgba(29,111,235,0.4);
+    box-shadow: 0 0 48px rgba(29,111,235,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 72px; flex-shrink: 0;
+  }
+  .about-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--blue-light); text-transform: uppercase; margin-bottom: 12px; }
+  .about-name { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+  .about-role { font-size: 16px; color: var(--blue-light); margin-bottom: 20px; font-weight: 500; }
+  .about-text { font-size: 16px; color: var(--muted); line-height: 1.8; }
+
+  /* ─── DELIVERABLES ─── */
+  .deliverables-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .deliverable-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 24px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .deliverable-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(29,111,235,0.3);
+  }
+  .check-icon {
+    width: 30px; height: 30px; min-width: 30px;
+    background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    margin-top: 2px; color: var(--success);
+  }
+  .check-icon svg { display: block; }
+  .deliverable-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .deliverable-text { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* ─── FIT SECTION ─── */
+  #fit { background: var(--bg-alt); }
+  .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .fit-card {
+    border-radius: 20px; padding: 36px;
+    border: 1px solid var(--card-border);
+  }
+  .fit-yes { background: rgba(16,185,129,0.04); border-color: rgba(16,185,129,0.15); }
+  .fit-no { background: rgba(100,116,139,0.04); }
+  .fit-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 28px;
+  }
+  .fit-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 700;
+  }
+  .fit-icon-yes { background: rgba(16,185,129,0.15); color: #10B981; }
+  .fit-icon-no { background: rgba(100,116,139,0.15); color: var(--muted-dark); }
+  .fit-title-yes { font-size: 18px; font-weight: 700; color: #10B981; }
+  .fit-title-no { font-size: 18px; font-weight: 700; color: var(--muted); }
+  .fit-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .fit-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.5; }
+  .fit-mark-yes { color: #10B981; font-weight: 700; min-width: 16px; margin-top: 1px; }
+  .fit-mark-no { color: var(--muted-dark); font-weight: 700; min-width: 16px; margin-top: 1px; }
+
+  /* ─── FAQ ─── */
+  .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 16px; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .faq-item.open { border-color: rgba(29,111,235,0.3); }
+  .faq-q {
+    width: 100%; background: none; border: none; color: inherit;
+    padding: 24px 28px; text-align: left;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    cursor: pointer; font-family: var(--font); font-size: 16px; font-weight: 600;
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--blue-light); }
+  .faq-chevron {
+    width: 24px; height: 24px; min-width: 24px;
+    background: rgba(29,111,235,0.1); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s, background 0.2s;
+    color: var(--blue-light);
+  }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); background: rgba(29,111,235,0.2); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0 28px; color: var(--muted); font-size: 15px; line-height: 1.8;
+  }
+  .faq-item.open .faq-a { max-height: 600px; padding: 0 28px 24px; }
+
+  /* ─── FINAL CTA ─── */
+  #final-cta {
+    background:
+      radial-gradient(ellipse 80% 80% at 50% 100%, rgba(29,111,235,0.15) 0%, transparent 70%),
+      var(--bg);
+    text-align: center; padding: 112px 0;
+  }
+  .final-cta-inner { max-width: 680px; margin: 0 auto; }
+  .vagas-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(29,111,235,0.08); border: 1px solid rgba(29,111,235,0.25);
+    border-radius: 100px; padding: 8px 18px; margin-bottom: 32px;
+    font-size: 13px; color: var(--blue-light); font-weight: 600;
+  }
+  .pulse-dot {
+    width: 8px; height: 8px; background: #10B981; border-radius: 50%;
+    animation: pulse-anim 2s infinite;
+  }
+  @keyframes pulse-anim {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.4); }
+  }
+  .final-cta-title { font-size: clamp(28px, 4vw, 46px); font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
+  .final-cta-sub { font-size: 17px; color: var(--muted); margin-bottom: 40px; line-height: 1.7; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #040710; border-top: 1px solid var(--card-border);
+    padding: 48px 0 40px;
+  }
+  .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+  .footer-logo {
+    font-size: 28px; font-weight: 900; letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff 0%, var(--blue-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .footer-divider { width: 100%; max-width: 480px; height: 1px; background: var(--card-border); }
+  .footer-links {
+    display: flex; flex-wrap: wrap; gap: 8px 24px;
+    justify-content: center; align-items: center;
+  }
+  .footer-links a {
+    color: var(--muted); font-size: 14px; text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-links-sep { color: var(--card-border); }
+  .footer-info { text-align: center; display: flex; flex-direction: column; gap: 8px; }
+  .footer-cnpj { font-size: 13px; color: var(--muted-dark); }
+  .footer-contact {
+    display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: center;
+  }
+  .footer-contact a {
+    color: var(--muted); font-size: 14px; text-decoration: none;
+    display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .footer-contact a:hover { color: var(--blue-light); }
+  .footer-copy { font-size: 13px; color: var(--muted-dark); }
+
+  /* ─── STICKY BAR ─── */
+  #sticky-cta {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    z-index: 900;
+    padding: 0 20px 18px;
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+    transform: translateY(115%);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  #sticky-cta.visible { transform: translateY(0); pointer-events: all; }
+
+  .sticky-badge-top {
+    display: inline-flex; align-items: center;
+    background: #00CFFF;
+    color: #020D1A;
+    border-radius: 100px 100px 0 0;
+    padding: 6px 22px 8px;
+    font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; line-height: 1;
+    box-shadow: 0 0 18px rgba(0, 207, 255, 0.55);
+  }
+
+  .sticky-pill {
+    width: 100%; max-width: 860px;
+    background: #060F1E;
+    border: 1.5px solid rgba(0, 207, 255, 0.3);
+    border-radius: 18px;
+    padding: 14px 14px 14px 28px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    box-shadow:
+      0 0 32px rgba(0, 207, 255, 0.12),
+      0 -4px 40px rgba(0,0,0,0.6),
+      inset 0 0 0 1px rgba(255,255,255,0.03);
+  }
+
+  .sticky-text {
+    font-size: 15px; font-weight: 700; color: var(--white);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .sticky-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff;
+    color: #020D1A;
+    border: none; border-radius: 100px;
+    padding: 13px 28px; font-family: var(--font); font-size: 14px; font-weight: 800;
+    cursor: pointer; white-space: nowrap; letter-spacing: 0.04em;
+    box-shadow: 0 0 20px rgba(0, 207, 255, 0.3);
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .sticky-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 32px rgba(0, 207, 255, 0.5);
+    background: #E8F9FF;
+  }
+
+  /* ─── MODAL ─── */
+  #modal {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  #modal.open { opacity: 1; pointer-events: all; }
+  .modal-overlay {
+    position: absolute; inset: 0;
+    background: rgba(4, 7, 16, 0.85);
+    backdrop-filter: blur(8px);
+  }
+  .modal-box {
+    position: relative; z-index: 1;
+    background: #0D1526;
+    border: 1px solid rgba(29,111,235,0.25);
+    border-radius: 24px;
+    width: 100%; max-width: 520px;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(29,111,235,0.1);
+    transform: scale(0.94) translateY(12px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #modal.open .modal-box { transform: scale(1) translateY(0); }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.06); border: none;
+    color: var(--muted); font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+  .modal-progress { padding: 28px 28px 0; }
+  .progress-steps {
+    display: flex; align-items: center; gap: 0; margin-bottom: 24px;
+  }
+  .step-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    border: 2px solid var(--card-border);
+    color: var(--muted); background: var(--card);
+    transition: all 0.3s; flex-shrink: 0;
+  }
+  .step-dot.active { border-color: var(--blue); color: #fff; background: var(--blue); }
+  .step-dot.done { border-color: var(--success); color: #fff; background: var(--success); }
+  .step-line {
+    flex: 1; height: 2px; background: var(--card-border);
+    transition: background 0.3s;
+  }
+  .step-line.done { background: var(--success); }
+
+  .modal-timer { margin-bottom: 0; }
+  .timer-bar-wrap {
+    height: 3px; background: var(--card-border); border-radius: 10px; overflow: hidden;
+  }
+  .timer-bar {
+    height: 100%; border-radius: 10px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-electric));
+    width: 100%; transition: width 1s linear;
+  }
+
+  .modal-body { padding: 28px; }
+  .modal-step { display: none; }
+  .modal-step.active { display: block; }
+
+  .modal-q { font-size: 20px; font-weight: 800; margin-bottom: 6px; line-height: 1.3; }
+  .modal-hint { font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+
+  .options-grid { display: grid; gap: 10px; }
+  .option-btn {
+    width: 100%; background: var(--card); border: 1.5px solid var(--card-border);
+    border-radius: 12px; padding: 14px 18px;
+    color: #fff; font-family: var(--font); font-size: 15px; font-weight: 500;
+    cursor: pointer; text-align: left;
+    transition: all 0.15s;
+  }
+  .option-btn:hover { border-color: rgba(29,111,235,0.5); background: rgba(29,111,235,0.06); }
+  .option-btn.selected {
+    border-color: var(--blue); background: rgba(29,111,235,0.1); color: var(--blue-light);
+    font-weight: 600;
+  }
+
+  .modal-actions {
+    display: flex; gap: 12px; margin-top: 24px;
+  }
+  .modal-actions .btn { flex: 1; }
+
+  .form-field { margin-bottom: 16px; }
+  .form-label {
+    display: block; font-size: 13px; font-weight: 600;
+    color: var(--muted); margin-bottom: 8px; letter-spacing: 0.02em;
+  }
+  .form-input {
+    width: 100%; background: var(--card); border: 1.5px solid var(--card-border);
+    border-radius: 12px; padding: 14px 16px;
+    color: #fff; font-family: var(--font); font-size: 15px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--blue); }
+  .form-input::placeholder { color: var(--muted-dark); }
+  .form-input.error { border-color: #F87171; }
+  .phone-wrap { display: flex; gap: 10px; }
+  .phone-prefix {
+    background: var(--card); border: 1.5px solid var(--card-border);
+    border-radius: 12px; padding: 14px 14px;
+    color: var(--muted); font-family: var(--font); font-size: 15px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  .modal-footer-note {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 16px 28px;
+    border-top: 1px solid var(--card-border);
+    font-size: 12px; color: var(--muted-dark);
+  }
+  .modal-footer-note span { display: flex; align-items: center; gap: 4px; }
+
+  /* ─── SUCCESS STEP ─── */
+  #modal-success { display: none; padding: 48px 28px; text-align: center; }
+  #modal-success.active { display: block; }
+  .success-check {
+    width: 72px; height: 72px; background: rgba(16,185,129,0.1);
+    border: 2px solid rgba(16,185,129,0.3); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; margin: 0 auto 24px;
+    animation: pop-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes pop-in { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .success-title { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+  .success-text { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 360px; margin: 0 auto 32px; }
+
+  /* ─── NAV HEADER ─── */
+  #site-nav {
+    position: sticky; top: 0; z-index: 800;
+    background: rgba(7, 11, 20, 0.88);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(29,111,235,0.12);
+    padding: 0 24px;
+    height: 68px;
+    display: flex; align-items: center;
+  }
+  .nav-inner {
+    max-width: 1120px; margin: 0 auto; width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .site-logo {
+    display: inline-flex; align-items: center;
+    text-decoration: none; user-select: none;
+  }
+  .logo-img {
+    height: 34px; width: auto; display: block;
+    mix-blend-mode: screen;
+  }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+    color: #fff; border: none; border-radius: 10px;
+    padding: 10px 22px; font-family: var(--font); font-size: 14px; font-weight: 700;
+    cursor: pointer; white-space: nowrap;
+    box-shadow: 0 0 18px rgba(29,111,235,0.3);
+    transition: all 0.2s;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 0 28px rgba(29,111,235,0.5); }
+
+  /* ─── ABOUT PHOTO ─── */
+  .about-photo {
+    width: 280px; height: 340px; flex-shrink: 0;
+    border-radius: 24px; overflow: hidden;
+    border: 2px solid rgba(29,111,235,0.25);
+    box-shadow: 0 0 48px rgba(29,111,235,0.18), 0 20px 60px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .about-photo img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top center;
+    display: block;
+  }
+  .about-photo-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #0D1F3C 0%, var(--blue-dark) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px;
+  }
+
+  /* ─── FOOTER LOGO ─── */
+  .footer-logo-wrap {
+    display: inline-flex; align-items: center;
+    text-decoration: none; user-select: none;
+  }
+  .logo-img-footer {
+    height: 30px; width: auto; display: block;
+    mix-blend-mode: screen;
+    opacity: 0.9;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .section { padding: 72px 0; }
+    .about-inner { grid-template-columns: 1fr; text-align: center; }
+    .about-photo { margin: 0 auto; width: 200px; height: 240px; }
+    .nav-cta span { display: none; }
+    .nav-cta { padding: 10px 16px; font-size: 13px; }
+    .fit-grid { grid-template-columns: 1fr; }
+    .illusion-card { grid-template-columns: 1fr; gap: 12px; }
+    .illusion-num { font-size: 32px; min-width: auto; }
+    .sticky-sub { display: none; }
+    .sticky-inner { gap: 12px; }
+    .sticky-text { font-size: 13px; }
+    .sticky-btn { padding: 10px 18px; font-size: 14px; }
+    .hero-headline { font-size: clamp(26px, 7vw, 40px); }
+    .gears-grid { grid-template-columns: 1fr; }
+    .tl-card { padding: 22px 20px; }
+    .tl-item { gap: 20px; }
+    .tl-node { width: 46px; height: 46px; }
+    .tl-node svg { width: 20px; height: 20px; }
+    .timeline::before { left: 22px; }
+    .deliverables-grid { grid-template-columns: 1fr; }
+    .cards-grid { grid-template-columns: 1fr; }
+    #hero { padding: 80px 0 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAV HEADER
+═══════════════════════════════════════════ -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="#" class="site-logo" aria-label="F3 House">
+      <img src="assets/logotipo%20F3house.jpg" alt="F3 House" class="logo-img">
+    </a>
+    <button class="nav-cta open-modal" aria-label="Diagnóstico gratuito">
+      Diagnóstico Gratuito
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge-wrap fade-in">
+        <span class="badge">Para empresas com operações entre R$75k e R$5M+/mês</span>
+      </div>
+
+      <h1 class="hero-headline fade-in">
+        Sua empresa gera receita.<br>
+        Mas o crescimento ainda vive na <span>cabeça dos seus melhores vendedores?</span>
+      </h1>
+
+      <p class="hero-sub fade-in">
+        Em uma sessão de diagnóstico comercial individual, um estrategista mapeia os pontos de ruptura do seu funil — da geração de leads ao fechamento. E demonstra como escalar resultados sem depender de talentos individuais nem de mais verba em mídia paga.
+      </p>
+
+      <div class="hero-cta-wrap fade-in">
+        <button class="btn btn-primary btn-lg open-modal" aria-label="Abrir formulário de diagnóstico gratuito">
+          Quero Meu Diagnóstico Gratuito
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="hero-social-proof">
+          <span class="stars">★★★★★</span>
+          <span class="proof-text">4.9</span>
+          <span class="proof-sep"></span>
+          <span class="proof-cases">80+ operações aceleradas</span>
+        </div>
+      </div>
+
+      <div class="hero-video fade-in">
+        <div class="play-btn" role="button" aria-label="Reproduzir vídeo">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M10 7.5L21 14L10 20.5V7.5Z" fill="white"/></svg>
+        </div>
+        <p class="video-label">Assista como funciona o diagnóstico comercial</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PAIN POINTS
+═══════════════════════════════════════════ -->
+<section class="section section-alt" id="pain">
+  <div class="container">
+    <div class="text-center fade-in">
+      <p class="section-label">Os sintomas</p>
+      <h2 class="pain-intro">
+        Você tem estrutura. Tem leads. Tem vendedores.<br>O que falta são processos comerciais.
+      </h2>
+      <p class="pain-sub">
+        Sem processos, cada um desses sintomas drena de milhares a dezenas de milhares de reais por semana — geralmente sem aparecer no seu radar. Veja se algum deles está na sua operação:
+      </p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card fade-in">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Dependência do vendedor de referência</h3>
+        <p class="card-text">O time existe, mas um ou dois nomes sustentam o mês inteiro. Se um deles pede demissão, fica doente ou perde motivação, a meta vai junto. A empresa fatura, mas o faturamento depende de gente, não de sistema.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="11" y2="17"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Tudo na memória, nada no processo</h3>
+        <p class="card-text">Sem playbook de vendas. Sem rituais documentados de equipe. Sem indicadores visíveis. Toda dúvida sobe para o gestor, e o mesmo erro se repete porque não existe referência para consultar.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+            <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+            <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Prospecção ativa inexistente ou improvisada</h3>
+        <p class="card-text">Cadência estruturada? Não existe. Social selling? Quando o vendedor se lembra. A operação fica refém do lead que aparece, não do que ela vai buscar.</p>
+      </div>
+      <div class="card fade-in">
+        <div class="card-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+            <line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </div>
+        <h3 class="card-title">Tráfego pago sem transparência</h3>
+        <p class="card-text">Você investe em Meta, Google e YouTube, mas ninguém sabe o custo real por lead, quantos viraram receita ou qual canal merece escala. O time de tráfego diz que está entregando. O comercial reclama da qualidade. Ninguém é dono do número.</p>
+      </div>
+    </div>
+
+    <div class="section-cta fade-in">
+      <button class="btn btn-primary open-modal">Quero Meu Diagnóstico Gratuito</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ILLUSIONS
+═══════════════════════════════════════════ -->
+<section class="section" id="illusions">
+  <div class="container">
+    <div class="text-center fade-in" style="margin-bottom:56px">
+      <p class="section-label">A armadilha mais cara</p>
+      <h2 class="section-title">Você provavelmente está atacando<br>o problema pelo lugar errado.</h2>
+      <p class="section-subtitle" style="margin: 0 auto">Existem 4 caminhos que parecem lógicos e consomem meses ou anos sem entregar resultado real.</p>
+    </div>
+
+    <div class="illusions-grid">
+      <div class="illusion-card fade-in">
+        <div class="illusion-num">01</div>
+        <div>
+          <p class="illusion-tag">Ilusão #1</p>
+          <span class="illusion-wrong">ERRADO</span>
+          <h3 class="illusion-title">"Se eu capacitar mais o time, todo mundo vai vender como o meu melhor vendedor."</h3>
+          <p class="illusion-text">Treinamento sem estrutura é como colocar combustível de alta performance em um motor sem manutenção. O problema não está no conhecimento do vendedor; está na arquitetura que conecta captação, qualificação e fechamento.</p>
+        </div>
+      </div>
+      <div class="illusion-card fade-in">
+        <div class="illusion-num">02</div>
+        <div>
+          <p class="illusion-tag">Ilusão #2</p>
+          <span class="illusion-wrong">ERRADO</span>
+          <h3 class="illusion-title">"Se eu trazer um comercial sênior, ele vai organizar tudo."</h3>
+          <p class="illusion-text">Você importa um talento e em 60 dias a estrutura precária corrói a performance dele. Vendedor excepcional dentro de um sistema sólido escala. Vendedor excepcional dentro do caos pede demissão — ou se adapta à média.</p>
+        </div>
+      </div>
+      <div class="illusion-card fade-in">
+        <div class="illusion-num">03</div>
+        <div>
+          <p class="illusion-tag">Ilusão #3</p>
+          <span class="illusion-wrong">ERRADO</span>
+          <h3 class="illusion-title">"Se eu aumentar o investimento em tráfego, entra mais cliente."</h3>
+          <p class="illusion-text">Mais tráfego sem qualificação, sem follow-up estruturado e sem time preparado vira custo de aquisição maior para o mesmo resultado. Tráfego amplifica o que já existe no funil. Não constrói o que está faltando.</p>
+        </div>
+      </div>
+      <div class="illusion-card fade-in">
+        <div class="illusion-num">04</div>
+        <div>
+          <p class="illusion-tag">Ilusão #4</p>
+          <span class="illusion-wrong">ERRADO</span>
+          <h3 class="illusion-title">"Se eu trocar de CRM e automatizar os processos, resolve."</h3>
+          <p class="illusion-text">CRM e automação organizam o que já foi construído. Se o gargalo é estrutural, automatizar o problema entrega o mesmo problema com um painel mais bonito.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MECHANISM F3
+═══════════════════════════════════════════ -->
+<section class="section section-alt" id="mechanism">
+  <div class="container">
+    <div class="text-center mechanism-intro fade-in">
+      <p class="section-label">A virada</p>
+      <h2 class="section-title">O MECANISMO ÚNICO F3</h2>
+      <p class="section-subtitle" style="margin: 0 auto">As 6 engrenagens dos Processos Comerciais Full Sales. Engrenagem isolada não transforma resultado. Conectadas, essas 6 engrenagens formam os processos comerciais que geram receita sem depender de nenhum nome específico do time.</p>
+    </div>
+
+    <div class="gears-grid">
+      <div class="gear-card fade-in">
+        <span class="gear-num">01</span>
+        <div class="gear-content">
+          <h3 class="gear-title">Funis de Marketing + Comerciais</h3>
+          <p class="gear-text">Geração previsível de leads qualificados, integrada ao processo de vendas — não como silos separados.</p>
+        </div>
+      </div>
+      <div class="gear-card fade-in">
+        <span class="gear-num">02</span>
+        <div class="gear-content">
+          <h3 class="gear-title">Indicação, Recompra e Embaixadores</h3>
+          <p class="gear-text">Cliente que compra mais de uma vez e traz outros. O motor de receita mais barato e mais ignorado da maioria das operações.</p>
+        </div>
+      </div>
+      <div class="gear-card fade-in">
+        <span class="gear-num">03</span>
+        <div class="gear-content">
+          <h3 class="gear-title">RH Comercial</h3>
+          <p class="gear-text">Pipeline de recrutamento contínuo, perfil adequado e onboarding que entrega um closer operacional em 30 dias.</p>
+        </div>
+      </div>
+      <div class="gear-card fade-in">
+        <span class="gear-num">04</span>
+        <div class="gear-content">
+          <h3 class="gear-title">Escada de Valor Completa</h3>
+          <p class="gear-text">Construção de ofertas em camadas — do ponto de entrada ao premium — onde cada cliente avança no LTV. Uma arquitetura de valor que cresce junto com o cliente.</p>
+        </div>
+      </div>
+      <div class="gear-card fade-in">
+        <span class="gear-num">05</span>
+        <div class="gear-content">
+          <h3 class="gear-title">Vendas (Closers)</h3>
+          <p class="gear-text">Time que fecha por processo, não por dom individual. Treinado, acompanhado e mensurado de forma sistemática.</p>
+        </div>
+      </div>
+      <div class="gear-card fade-in">
+        <span class="gear-num">06</span>
+        <div class="gear-content">
+          <h3 class="gear-title">Pré-Vendas (Setters)</h3>
+          <p class="gear-text">Qualificação cirúrgica antes do closer entrar. O vendedor sênior só conversa com quem já está preparado para comprar.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-cta fade-in">
+      <button class="btn btn-primary open-modal">Quero Meu Diagnóstico Gratuito</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     BENEFITS
+═══════════════════════════════════════════ -->
+<section class="section" id="benefits">
+  <div class="container">
+    <div class="text-center fade-in" style="margin-bottom:56px">
+      <p class="section-label">Resultado real</p>
+      <h2 class="section-title">Como fica o dia a dia de quem<br>implementou os processos completos</h2>
+      <p class="section-subtitle" style="margin: 0 auto">Não é promessa. É o cotidiano de 550+ empresários que passaram pela implementação.</p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item fade-in">
+        <div class="tl-node">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+            <polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <div class="tl-card">
+          <p class="tl-step">Etapa 01 — Clareza operacional</p>
+          <h3 class="tl-title">Previsibilidade que elimina o achismo</h3>
+          <p class="tl-text">Na segunda-feira, você abre o painel e sabe quanto vai fechar até sexta. Não estima. Não torce. Sabe. Os números substituem o feeling do dono.</p>
+        </div>
+      </div>
+
+      <div class="tl-item fade-in">
+        <div class="tl-node">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="tl-card">
+          <p class="tl-step">Etapa 02 — Saúde financeira</p>
+          <h3 class="tl-title">Lucro real, não só volume</h3>
+          <p class="tl-text">Você enxerga quanto sobra em cada real que entra. Decisões de contratação e investimento passam a se basear em margem, não em receita bruta.</p>
+        </div>
+      </div>
+
+      <div class="tl-item fade-in">
+        <div class="tl-node">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <div class="tl-card">
+          <p class="tl-step">Etapa 03 — Escala sistêmica</p>
+          <h3 class="tl-title">Receita escala, sua agenda não</h3>
+          <p class="tl-text">A operação cresce sem te arrastar junto. Cada novo cliente não significa mais uma reunião sua. Os processos escalam. Você não precisa.</p>
+        </div>
+      </div>
+
+      <div class="tl-item fade-in">
+        <div class="tl-node">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="tl-card">
+          <p class="tl-step">Etapa 04 — Liberdade executiva</p>
+          <h3 class="tl-title">Sexta às 19h, celular no silencioso</h3>
+          <p class="tl-text">Você encerra a semana e a operação não para. Domingo é descanso, não plantão de WhatsApp comercial. A vida pessoal volta para o calendário.</p>
+        </div>
+      </div>
+
+      <div class="tl-item fade-in">
+        <div class="tl-node">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+          </svg>
+        </div>
+        <div class="tl-card">
+          <p class="tl-step">Etapa 05 — Autonomia total</p>
+          <h3 class="tl-title">30 dias de férias, meta entregue</h3>
+          <p class="tl-text">Você viaja, volta, e o mês fechou dentro do objetivo. O time decidiu, conduziu, fechou. Você não foi acionado uma única vez.</p>
+        </div>
+      </div>
+
+      <div class="tl-item fade-in">
+        <div class="tl-node">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 3h12l4 6-10 13L2 9z"/>
+            <path d="M11 3L8 9l4 13 4-13-3-6"/>
+            <line x1="2" y1="9" x2="22" y2="9"/>
+          </svg>
+        </div>
+        <div class="tl-card">
+          <p class="tl-step">Destino final — Ativo real</p>
+          <h3 class="tl-title">Empresa com valor de mercado real</h3>
+          <p class="tl-text">Negócio que não depende do fundador é negócio vendável e herdável. Você constrói um ativo, não uma renda mensal que para quando você para.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-cta fade-in">
+      <button class="btn btn-primary open-modal">Quero Meu Diagnóstico Gratuito</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════ -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-inner fade-in">
+      <div class="about-photo">
+        <img src="assets/fabio.jpg" alt="Fabio Figueira — Estrategista Comercial F3House"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.about-photo-placeholder').style.display='flex';">
+        <div class="about-photo-placeholder" style="display:none">👨‍💼</div>
+      </div>
+      <div>
+        <p class="about-label">Quem está por trás do diagnóstico</p>
+        <h2 class="about-name">Fabio Figueira</h2>
+        <p class="about-role">Estrategista Comercial · Fundador da F3House</p>
+        <p class="about-text">
+          Formado em engenharia pela UFRJ, Fabio Figueira migrou para o universo de marketing e tráfego pago ao identificar uma lacuna crítica: empresas que tinham verba e não tinham capacidade de análise nem de entrega. Tirou todas as certificações técnicas da área e hoje atua como consultor para negócios que usam tráfego pago como principal canal de captação.<br><br>
+          Foi essa arquitetura que a F3House construiu nos próprios negócios ao longo de 8 anos — e replicou em 550+ empresas. Não é teoria. É um sistema testado em campo.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     DELIVERABLES
+═══════════════════════════════════════════ -->
+<section class="section section-alt" id="deliverables">
+  <div class="container">
+    <div class="text-center fade-in" style="margin-bottom:56px">
+      <p class="section-label">O que você recebe</p>
+      <h2 class="section-title">O que você sai sabendo<br>após o diagnóstico comercial</h2>
+      <p class="section-subtitle" style="margin: 0 auto">É uma leitura real da sua operação. Você termina a conversa com o mapa completo dos gargalos e das ações prioritárias.</p>
+    </div>
+
+    <div class="deliverables-grid">
+      <div class="deliverable-item fade-in">
+        <div class="check-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="deliverable-title">Diagnóstico da estrutura comercial</h3>
+          <p class="deliverable-text">Quais das 6 engrenagens estão falhando na sua operação hoje — e em que sequência corrigir.</p>
+        </div>
+      </div>
+      <div class="deliverable-item fade-in">
+        <div class="check-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="deliverable-title">Dimensionamento de equipe</h3>
+          <p class="deliverable-text">Quantos vendedores fazem sentido para o seu volume atual e qual a ordem lógica de contratação.</p>
+        </div>
+      </div>
+      <div class="deliverable-item fade-in">
+        <div class="check-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="deliverable-title">Painel de indicadores essenciais</h3>
+          <p class="deliverable-text">Os 6 números que precisam estar visíveis para a operação rodar sem você monitorando cada detalhe.</p>
+        </div>
+      </div>
+      <div class="deliverable-item fade-in">
+        <div class="check-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="deliverable-title">Alavancas de receita imediata</h3>
+          <p class="deliverable-text">5 movimentos comerciais que aumentam receita com a mesma base de leads — sem investir mais em tráfego.</p>
+        </div>
+      </div>
+      <div class="deliverable-item fade-in">
+        <div class="check-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="deliverable-title">Estrutura de retenção de time</h3>
+          <p class="deliverable-text">Como remunerar e construir plano de carreira para não perder os bons nem criar zona de conforto nos medianos.</p>
+        </div>
+      </div>
+      <div class="deliverable-item fade-in">
+        <div class="check-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="deliverable-title">Stack de ferramentas que realmente funciona</h3>
+          <p class="deliverable-text">Quais tecnologias multiplicam produtividade por 4 — e quais são só burocracia com interface bonita.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FIT SECTION
+═══════════════════════════════════════════ -->
+<section class="section" id="fit">
+  <div class="container">
+    <div class="text-center fade-in" style="margin-bottom:56px">
+      <p class="section-label">Qualificação</p>
+      <h2 class="section-title">Pra ser direto: esse diagnóstico<br>não é universal.</h2>
+      <p class="section-subtitle" style="margin: 0 auto">Preferimos te dizer "não combina" agora do que desperdiçar o tempo dos dois lados.</p>
+    </div>
+
+    <div class="fit-grid fade-in">
+      <div class="fit-card fit-yes">
+        <div class="fit-header">
+          <div class="fit-icon fit-icon-yes">✓</div>
+          <h3 class="fit-title-yes">Faz sentido para você se:</h3>
+        </div>
+        <ul class="fit-list">
+          <li><span class="fit-mark-yes">✓</span><span>Você fatura R$75k+/mês de forma recorrente</span></li>
+          <li><span class="fit-mark-yes">✓</span><span>Você se identifica em pelo menos 3 dos sintomas: time dependente, ausência de playbook, prospecção sem método, tráfego sem visibilidade</span></li>
+          <li><span class="fit-mark-yes">✓</span><span>Você está pronto para implementar, não só para receber teoria</span></li>
+          <li><span class="fit-mark-yes">✓</span><span>Você quer crescer com processos, não com pessoas insubstituíveis</span></li>
+          <li><span class="fit-mark-yes">✓</span><span>Você está preparado para tomar decisões difíceis sobre processo, equipe e oferta</span></li>
+        </ul>
+      </div>
+      <div class="fit-card fit-no">
+        <div class="fit-header">
+          <div class="fit-icon fit-icon-no">✕</div>
+          <h3 class="fit-title-no">Não faz sentido se:</h3>
+        </div>
+        <ul class="fit-list">
+          <li><span class="fit-mark-no">✕</span><span>Você acredita que mais um curso ou treinamento resolve o problema</span></li>
+          <li><span class="fit-mark-no">✕</span><span>Você espera que terceiros façam a implementação no seu lugar, sem sua participação</span></li>
+          <li><span class="fit-mark-no">✕</span><span>Você não tem certeza se vai manter o negócio nos próximos 3 anos</span></li>
+          <li><span class="fit-mark-no">✕</span><span>Você fatura menos de R$75k/mês (quando chegar lá, voltamos a conversar)</span></li>
+          <li><span class="fit-mark-no">✕</span><span>Você quer participar só por curiosidade, sem intenção real de agir</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FAQ
+═══════════════════════════════════════════ -->
+<section class="section section-alt" id="faq">
+  <div class="container">
+    <div class="text-center fade-in" style="margin-bottom:56px">
+      <p class="section-label">Dúvidas frequentes</p>
+      <h2 class="section-title">O que os empresários perguntam<br>antes de aplicar</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item fade-in">
+        <button class="faq-q" aria-expanded="false">
+          O diagnóstico tem algum custo ou compromisso?
+          <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="faq-a">Nenhum. É 100% gratuito e sem obrigação de continuidade. A F3House investe nessa sessão porque uma parte dos empresários que passa por ela decide trabalhar conosco depois. Mas a decisão é inteiramente sua. Sem letras miúdas, sem follow-up agressivo.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <button class="faq-q" aria-expanded="false">
+          Funciona para o tamanho da minha operação?
+          <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="faq-a">Sim. Empresas que faturam R$75k+/mês já sentem na pele o peso de uma operação que depende de pessoas, não de processos. O núcleo mais frequente dos nossos cases fica entre R$300k e R$2M/mês, mas a metodologia funciona desde R$75k. Mais de 70% dos casos acelerados dobraram ou triplicaram receita em 6 a 12 meses.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <button class="faq-q" aria-expanded="false">
+          Em quanto tempo aparecem os primeiros resultados?
+          <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="faq-a">O diagnóstico entrega clareza imediata — você termina a call com um plano de ação. Na implementação, os indicadores costumam se mover entre 30 e 60 dias. Dobra de faturamento ocorre entre 6 e 12 meses nos nossos cases. Mas o ganho mais imediato é cognitivo: você vai saber exatamente onde o dinheiro estava vazando.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <button class="faq-q" aria-expanded="false">
+          A call é uma análise real ou é um pitch disfarçado?
+          <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="faq-a">Começa como análise real. Formato consultivo, com perguntas estruturadas para identificar o gargalo principal da sua operação. Só ao final, se houver encaixe, apresentamos como funciona uma implementação. Você decide depois, sem pressão. Se não houver fit, você sai com o diagnóstico de qualquer forma.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <button class="faq-q" aria-expanded="false">
+          Já passei por treinamentos, consultorias e cursos. Por que isso seria diferente?
+          <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="faq-a">Tudo que você experimentou antes mexeu em uma engrenagem de cada vez. A F3House trabalha as 6 em conjunto, na sequência correta. É por isso que treinamento isolado não muda o resultado (você já sabe) e processos comerciais completos mudam tudo (é o que vamos te mostrar). O diagnóstico está exatamente aí: para mapear quais peças estão quebradas e em que ordem corrigir.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <button class="faq-q" aria-expanded="false">
+          Não tenho margem de tempo para uma implementação grande agora. Vale a pena?
+          <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="faq-a">Essa é exatamente a razão pela qual o diagnóstico existe. Falta de tempo é sintoma direto de uma operação que depende de você em excesso. Uma conversa agora pode economizar centenas de horas no próximo ano — ou te mostrar que o momento ainda não é o ideal, o que também é uma resposta válida.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <button class="faq-q" aria-expanded="false">
+          Se eu quiser contratar depois, quanto custa e qual o prazo?
+          <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="faq-a">O investimento varia conforme o porte da operação, a complexidade atual e quais engrenagens precisam ser construídas do zero versus ajustadas. Faz mais sentido discutir isso na call, depois que o estrategista entender o seu negócio. Prazo típico: melhoria de indicadores em 30 a 60 dias, dobra de faturamento em 6 a 12 meses.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <button class="faq-q" aria-expanded="false">
+          Posso levar meu sócio?
+          <span class="faq-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="faq-a">Sim, e recomendamos. Decisões estruturais que envolvem mais de um sócio avançam mais rápido quando todos participam da mesma conversa. A call acontece via Zoom — traga quem for necessário.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FINAL CTA
+═══════════════════════════════════════════ -->
+<section id="final-cta">
+  <div class="container">
+    <div class="final-cta-inner fade-in">
+      <div class="vagas-badge">
+        <span class="pulse-dot"></span>
+        Cada estrategista atende no máximo 20 empresários por semana
+      </div>
+      <h2 class="final-cta-title">Pronto para montar os processos comerciais que sua operação ainda não tem?</h2>
+      <p class="final-cta-sub">Diagnóstico comercial 1:1 com um estrategista. Sem custo. Sem compromisso.</p>
+      <button class="btn btn-primary btn-lg open-modal" style="margin: 0 auto; display: flex;">
+        Quero Meu Diagnóstico Gratuito
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="#" class="footer-logo-wrap" aria-label="F3 House">
+        <img src="assets/logotipo%20F3house.jpg" alt="F3 House" class="logo-img-footer">
+      </a>
+      <div class="footer-divider"></div>
+      <div class="footer-links">
+        <a href="#">Termos de Uso</a>
+        <span class="footer-links-sep">·</span>
+        <a href="#">Política de Privacidade</a>
+      </div>
+      <div class="footer-info">
+        <p class="footer-cnpj">CNPJ: 26.791.593/0001-45</p>
+        <div class="footer-contact">
+          <a href="https://instagram.com/f3house" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            Instagram
+          </a>
+          <a href="mailto:atendimento@f3house.com.br">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            atendimento@f3house.com.br
+          </a>
+        </div>
+      </div>
+      <p class="footer-copy">Todos os direitos reservados a F3 House — 2026</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     STICKY CTA BAR
+═══════════════════════════════════════════ -->
+<div id="sticky-cta" aria-hidden="true">
+  <span class="sticky-badge-top">Diagnóstico Gratuito</span>
+  <div class="sticky-pill">
+    <span class="sticky-text">Descubra onde sua operação está travada</span>
+    <button class="sticky-btn open-modal" aria-label="Aplicar agora para diagnóstico gratuito">
+      APLICAR AGORA &nbsp;→
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MODAL
+═══════════════════════════════════════════ -->
+<div id="modal" role="dialog" aria-modal="true" aria-label="Formulário de diagnóstico gratuito">
+  <div class="modal-overlay" id="modal-overlay"></div>
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close" aria-label="Fechar">✕</button>
+
+    <!-- Progress -->
+    <div class="modal-progress" id="modal-progress">
+      <div class="progress-steps">
+        <div class="step-dot active" data-step="1">1</div>
+        <div class="step-line" data-line="1"></div>
+        <div class="step-dot" data-step="2">2</div>
+        <div class="step-line" data-line="2"></div>
+        <div class="step-dot" data-step="3">3</div>
+        <div class="step-line" data-line="3"></div>
+        <div class="step-dot" data-step="4">4</div>
+      </div>
+      <div class="modal-timer">
+        <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
+      </div>
+    </div>
+
+    <!-- Step 1: Segmento -->
+    <div class="modal-body">
+      <div class="modal-step active" id="step-1">
+        <h2 class="modal-q">Qual o segmento da sua empresa?</h2>
+        <p class="modal-hint">Isso ajuda a personalizar o seu diagnóstico comercial.</p>
+        <div class="options-grid" id="step1-options">
+          <button class="option-btn" data-value="Saúde">🏥 Saúde</button>
+          <button class="option-btn" data-value="Jurídico">⚖️ Jurídico</button>
+          <button class="option-btn" data-value="Indústria">🏭 Indústria</button>
+          <button class="option-btn" data-value="Finanças">💳 Finanças</button>
+          <button class="option-btn" data-value="Tecnologia/SaaS">💻 Tecnologia / SaaS</button>
+          <button class="option-btn" data-value="Serviços/Mentoria">🎯 Serviços / Mentoria</button>
+          <button class="option-btn" data-value="Outro">📌 Outro</button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-primary btn-full" id="step1-next" disabled>Continuar</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Papel -->
+      <div class="modal-step" id="step-2">
+        <h2 class="modal-q">Qual é o seu papel hoje na empresa?</h2>
+        <p class="modal-hint">Pra personalizar seu diagnóstico — falamos diferente com sócio do que com gerente.</p>
+        <div class="options-grid" id="step2-options">
+          <button class="option-btn" data-value="Sócio / Empresário">👔 Sócio / Empresário</button>
+          <button class="option-btn" data-value="Gerente / Líder">📋 Gerente / Líder</button>
+          <button class="option-btn" data-value="Colaborador">🤝 Colaborador</button>
+          <button class="option-btn" data-value="Freelancer">💼 Freelancer</button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="step2-back">Voltar</button>
+          <button class="btn btn-primary" id="step2-next" disabled style="flex:2">Continuar</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Receita -->
+      <div class="modal-step" id="step-3">
+        <h2 class="modal-q">Qual a receita média mensal da empresa?</h2>
+        <p class="modal-hint">A análise muda completamente em cada faixa. Sem julgamento — só pra te entregar o diagnóstico certo.</p>
+        <div class="options-grid" id="step3-options">
+          <button class="option-btn" data-value="Abaixo de R$ 30 mil">Abaixo de R$ 30 mil</button>
+          <button class="option-btn" data-value="Entre R$ 30 mil e R$ 50 mil">Entre R$ 30 mil e R$ 50 mil</button>
+          <button class="option-btn" data-value="Entre R$ 50 mil e R$ 100 mil">Entre R$ 50 mil e R$ 100 mil</button>
+          <button class="option-btn" data-value="Entre R$ 100 mil e R$ 300 mil">Entre R$ 100 mil e R$ 300 mil</button>
+          <button class="option-btn" data-value="Entre R$ 300 mil e R$ 500 mil">Entre R$ 300 mil e R$ 500 mil</button>
+          <button class="option-btn" data-value="Entre R$ 500 mil e R$ 1 milhão">Entre R$ 500 mil e R$ 1 milhão</button>
+          <button class="option-btn" data-value="Acima de R$ 1 milhão">Acima de R$ 1 milhão</button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="step3-back">Voltar</button>
+          <button class="btn btn-primary" id="step3-next" disabled style="flex:2">Continuar</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Contato -->
+      <div class="modal-step" id="step-4">
+        <h2 class="modal-q">Quase lá — onde a gente te encontra?</h2>
+        <p class="modal-hint">Um estrategista entra em contato via WhatsApp em até 4h úteis pra confirmar sua vaga. Zero spam. Zero ligação fria.</p>
+        <div class="form-field">
+          <label class="form-label" for="f-name">Nome Completo *</label>
+          <input class="form-input" type="text" id="f-name" placeholder="Como podemos te chamar" autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="f-email">E-mail *</label>
+          <input class="form-input" type="email" id="f-email" placeholder="seu@email.com" autocomplete="email">
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="f-phone">WhatsApp *</label>
+          <div class="phone-wrap">
+            <span class="phone-prefix">🇧🇷 +55</span>
+            <input class="form-input" type="tel" id="f-phone" placeholder="(11) 99999-9999" autocomplete="tel">
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="step4-back">Voltar</button>
+          <button class="btn btn-primary" id="step4-submit" style="flex:2">Quero meu diagnóstico gratuito</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div id="modal-success">
+      <div class="success-check">✓</div>
+      <h2 class="success-title">Recebemos seu pedido!</h2>
+      <p class="success-text">Um estrategista entrará em contato pelo WhatsApp em até 4h úteis para confirmar sua vaga no diagnóstico.</p>
+      <button class="btn btn-primary" id="success-close" style="margin: 0 auto; display: flex;">Fechar</button>
+    </div>
+
+    <!-- Modal footer note -->
+    <div class="modal-footer-note" id="modal-footer-note">
+      <span>🔒 Dados seguros</span>
+      <span>·</span>
+      <span>🛡️ Criptografia SSL</span>
+      <span>·</span>
+      <span>🚫 Sem spam</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  // ─── SCROLL ANIMATIONS ───
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(function(el, i) {
+    el.style.transitionDelay = (i % 4) * 0.07 + 's';
+    observer.observe(el);
+  });
+
+  // ─── STICKY BAR ───
+  var stickyCta = document.getElementById('sticky-cta');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 400) {
+      stickyCta.classList.add('visible');
+      stickyCta.setAttribute('aria-hidden', 'false');
+    } else {
+      stickyCta.classList.remove('visible');
+      stickyCta.setAttribute('aria-hidden', 'true');
+    }
+  }, { passive: true });
+
+  // ─── FAQ ACCORDION ───
+  document.querySelectorAll('.faq-q').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = btn.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i) {
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // ─── MODAL ───
+  var modal = document.getElementById('modal');
+  var currentStep = 1;
+  var answers = {};
+  var timerInterval = null;
+  var timerSeconds = 60;
+
+  function openModal() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    goToStep(1);
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    clearInterval(timerInterval);
+  }
+
+  document.querySelectorAll('.open-modal').forEach(function(btn) {
+    btn.addEventListener('click', openModal);
+  });
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal-overlay').addEventListener('click', closeModal);
+  document.getElementById('success-close').addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  function goToStep(n) {
+    currentStep = n;
+    document.querySelectorAll('.modal-step').forEach(function(s) { s.classList.remove('active'); });
+    var target = document.getElementById('step-' + n);
+    if (target) target.classList.add('active');
+
+    // Update progress dots
+    document.querySelectorAll('.step-dot').forEach(function(dot) {
+      var s = parseInt(dot.dataset.step);
+      dot.classList.remove('active', 'done');
+      if (s < n) dot.classList.add('done');
+      else if (s === n) dot.classList.add('active');
+    });
+    document.querySelectorAll('.step-line').forEach(function(line) {
+      var l = parseInt(line.dataset.line);
+      line.classList.toggle('done', l < n);
+    });
+
+    startTimer();
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    timerSeconds = 60;
+    var bar = document.getElementById('timer-bar');
+    bar.style.width = '100%';
+    timerInterval = setInterval(function() {
+      timerSeconds--;
+      bar.style.width = (timerSeconds / 60 * 100) + '%';
+      if (timerSeconds <= 0) clearInterval(timerInterval);
+    }, 1000);
+  }
+
+  // Option buttons
+  function setupOptions(containerId, nextBtnId, key) {
+    var container = document.getElementById(containerId);
+    var nextBtn = document.getElementById(nextBtnId);
+    container.querySelectorAll('.option-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        container.querySelectorAll('.option-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        answers[key] = btn.dataset.value;
+        nextBtn.disabled = false;
+      });
+    });
+  }
+
+  setupOptions('step1-options', 'step1-next', 'segmento');
+  setupOptions('step2-options', 'step2-next', 'papel');
+  setupOptions('step3-options', 'step3-next', 'receita');
+
+  document.getElementById('step1-next').addEventListener('click', function() { goToStep(2); });
+  document.getElementById('step2-next').addEventListener('click', function() { goToStep(3); });
+  document.getElementById('step3-next').addEventListener('click', function() { goToStep(4); });
+  document.getElementById('step2-back').addEventListener('click', function() { goToStep(1); });
+  document.getElementById('step3-back').addEventListener('click', function() { goToStep(2); });
+  document.getElementById('step4-back').addEventListener('click', function() { goToStep(3); });
+
+  // Phone mask
+  var phoneInput = document.getElementById('f-phone');
+  phoneInput.addEventListener('input', function() {
+    var v = phoneInput.value.replace(/\D/g, '');
+    if (v.length > 11) v = v.slice(0, 11);
+    if (v.length > 6) v = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
+    else if (v.length > 2) v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+    else if (v.length > 0) v = '(' + v;
+    phoneInput.value = v;
+  });
+
+  // Submit
+  document.getElementById('step4-submit').addEventListener('click', function() {
+    var name = document.getElementById('f-name');
+    var email = document.getElementById('f-email');
+    var phone = document.getElementById('f-phone');
+    var ok = true;
+
+    [name, email, phone].forEach(function(f) { f.classList.remove('error'); });
+
+    if (!name.value.trim() || name.value.trim().length < 2) {
+      name.classList.add('error'); ok = false;
+    }
+    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(email.value.trim())) {
+      email.classList.add('error'); ok = false;
+    }
+    var phoneClean = phone.value.replace(/\D/g, '');
+    if (phoneClean.length < 10) {
+      phone.classList.add('error'); ok = false;
+    }
+
+    if (!ok) return;
+
+    answers.nome = name.value.trim();
+    answers.email = email.value.trim();
+    answers.whatsapp = phone.value.trim();
+
+    clearInterval(timerInterval);
+
+    // Show success
+    document.getElementById('modal-progress').style.display = 'none';
+    document.querySelector('.modal-box .modal-body').style.display = 'none';
+    document.getElementById('modal-footer-note').style.display = 'none';
+    document.getElementById('modal-success').classList.add('active');
+  });
+
+})();
+</script>
+</body>
+</html>

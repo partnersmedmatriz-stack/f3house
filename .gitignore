@@ -1,0 +1,8 @@
+node_modules/
+package.json
+package-lock.json
+screenshot.mjs
+assets/preview-*.png
+assets/prev-*.png
+copy pagina de captura.txt
+Modelo do formulario de captura e pagina/
